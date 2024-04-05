@@ -10,6 +10,7 @@ $ yarn install
 
 ```bash
 # development
+$ docker start nest-js-study
 $ yarn start
 
 # watch mode
@@ -20,6 +21,7 @@ $ docker start nest-js-study
 
 # production mode
 $ yarn start:prod
+
 ```
 
 ## Support
