@@ -7,9 +7,9 @@ import { UpdatePatchUserDto } from './dto/update-patch-user.dto';
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
-  async create({ email, name, password }: CreateUserDto) {
+  async create(data: CreateUserDto) {
     return this.prisma.user.create({
-      data: { email, name, password },
+      data: data,
     });
   }
 
@@ -38,10 +38,9 @@ export class UserService {
 
   async update(
     id: number,
-    { email, name, password, birth_at }: UpdatePutUserDto,
+    { email, name, password, birth_at, role }: UpdatePutUserDto,
   ) {
     await this.existId(id);
-    console.log('🚀 ~ data:', { email, name, password, birth_at });
 
     return this.prisma.user.update({
       data: {
@@ -49,6 +48,7 @@ export class UserService {
         name,
         password,
         birth_at: birth_at ? new Date(birth_at) : null,
+        role,
       },
       where: { id: id },
     });
@@ -56,7 +56,7 @@ export class UserService {
 
   async updatePartial(
     id: number,
-    { email, name, password, birth_at }: UpdatePatchUserDto,
+    { email, name, password, birth_at, role }: UpdatePatchUserDto,
   ) {
     await this.existId(id);
     const data: any = {};
@@ -72,6 +72,9 @@ export class UserService {
     }
     if (password) {
       data.password = password;
+    }
+    if (role) {
+      data.role = role;
     }
 
     return this.prisma.user.update({
