@@ -14,8 +14,6 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
     const { authorization } = request.headers;
-
-    console.log('🚀 ~ authorization:', authorization);
     try {
       const data = this.authService.checkToken(
         (authorization ?? '').split(' ')[1],

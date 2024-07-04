@@ -19,6 +19,7 @@ import { Role } from 'src/enums/role.enum';
 import { LogInterceptor } from 'src/interceptors/log.interceptor';
 import { RoleGuard } from 'src/guards/role.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { SkipThrottle } from '@nestjs/throttler';
 // import { LogInterceptor } from 'src/interceptors/log.interceptor';
 @Roles(Role.Admin)
 @UseGuards(AuthGuard, RoleGuard)
@@ -34,6 +35,7 @@ export class UserController {
     return this.userService.create(data);
   }
 
+  @SkipThrottle()
   @Get()
   async list() {
     return this.userService.list();
