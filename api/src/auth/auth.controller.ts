@@ -2,6 +2,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  FileTypeValidator,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Post,
   UploadedFile,
   UploadedFiles,
@@ -61,7 +64,23 @@ export class AuthController {
   @UseInterceptors(FileInterceptor('file'))
   @UseGuards(AuthGuard)
   @Post('photo')
-  async uploadPhoto(@User() user, @UploadedFile() photo: Express.Multer.File) {
+  async uploadPhoto(
+    @User() user,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new FileTypeValidator({
+            fileType: 'image/jpeg',
+          }),
+          new MaxFileSizeValidator({
+            // maxSize: 1024 * 1024 * 50,
+            maxSize: 1024 * 50,
+          }),
+        ],
+      }),
+    )
+    photo: Express.Multer.File,
+  ) {
     const path = join(
       __dirname,
       '..',
@@ -76,7 +95,7 @@ export class AuthController {
       throw new BadRequestException(e);
     }
 
-    return { sucess: true };
+    return { sucess: photo };
   }
   @UseInterceptors(FilesInterceptor('files'))
   @UseGuards(AuthGuard)
