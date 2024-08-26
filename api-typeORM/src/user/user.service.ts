@@ -40,6 +40,7 @@ export class UserService {
 
   async show(id: number) {
     await this.existId(id);
+
     return this.userRepository.findOneBy({
       id: id,
     });
@@ -59,6 +60,7 @@ export class UserService {
       birth_at: birth_at ? new Date(birth_at) : null,
       role,
     });
+
     return this.show(id);
   }
 
@@ -85,12 +87,15 @@ export class UserService {
       data.role = role;
     }
     await this.userRepository.update(id, data);
+
     return this.show(id);
   }
 
   async delete(id: number) {
     await this.existId(id);
-    return this.userRepository.delete(id);
+    await this.userRepository.delete(id);
+
+    return true;
   }
 
   async existId(id: number) {
