@@ -1,5 +1,5 @@
-import { Role } from 'src/enums/role.enum';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { Role } from '../../src/enums/role.enum';
 
 export class Migrate1724610383913 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

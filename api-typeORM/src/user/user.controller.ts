@@ -13,14 +13,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePutUserDto } from './dto/update-put-user.dto';
 import { UpdatePatchUserDto } from './dto/update-patch-user.dto';
 import { UserService } from './user.service';
-import { ParamID } from 'src/decorators/param-id.decorator';
-import { Roles } from 'src/decorators/roles.decorator';
-import { Role } from 'src/enums/role.enum';
-import { LogInterceptor } from 'src/interceptors/log.interceptor';
-import { RoleGuard } from 'src/guards/role.guard';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { ParamID } from '../decorators/param-id.decorator';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '../enums/role.enum';
+import { LogInterceptor } from '../interceptors/log.interceptor';
+import { RoleGuard } from '../guards/role.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { SkipThrottle } from '@nestjs/throttler';
-// import { LogInterceptor } from 'src/interceptors/log.interceptor';
 @Roles(Role.Admin)
 @UseGuards(AuthGuard, RoleGuard)
 @UseInterceptors(LogInterceptor) //pega em todo o controller
