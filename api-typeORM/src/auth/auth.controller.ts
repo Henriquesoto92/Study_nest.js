@@ -6,7 +6,6 @@ import {
   MaxFileSizeValidator,
   ParseFilePipe,
   Post,
-  Req,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -22,15 +21,14 @@ import {
   FileInterceptor,
   FilesInterceptor,
 } from '@nestjs/platform-express';
-import { UserService } from '../user/user.service';
 import { FileService } from '../file/file.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { User } from '../decorators/user.decorator';
+import { UserEntity } from '../user/entity/user.entity';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly fileService: FileService,
   ) {}
@@ -57,8 +55,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Post('me')
-  async me(@User() user, @Req() { tokenPayload }) {
-    return { user, tokenPayload };
+  async me(@User() user: UserEntity) {
+    return user;
   }
 
   @UseInterceptors(FileInterceptor('file'))
@@ -88,7 +86,7 @@ export class AuthController {
       throw new BadRequestException(e);
     }
 
-    return { sucess: photo };
+    return photo;
   }
   @UseInterceptors(FilesInterceptor('files'))
   @UseGuards(AuthGuard)

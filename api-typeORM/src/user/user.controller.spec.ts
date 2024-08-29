@@ -6,7 +6,7 @@ import { guardMock } from '../testing/guard.mock';
 import { RoleGuard } from '../guards/role.guard';
 import { UserService } from './user.service';
 import { createUserDto } from '../testing/create-user-dto.mock';
-import { UserEntityList } from '../testing/user-entity-list.mock';
+import { userEntityList } from '../testing/user-entity-list.mock';
 import { updatePutUserDto } from '../testing/update-put-user-dto.mock';
 import { updatePatchUserDto } from '../testing/update-patch-user-dto.mock';
 
@@ -46,38 +46,38 @@ describe('UserController', () => {
     test('create method', async () => {
       const result = await userController.create(createUserDto);
 
-      expect(result).toEqual(UserEntityList[0]);
+      expect(result).toEqual(userEntityList[0]);
     });
   });
   describe('Read', () => {
     test('list method', async () => {
       const result = await userController.list();
 
-      expect(result).toEqual(UserEntityList);
+      expect(result).toEqual(userEntityList);
     });
 
     test('show method', async () => {
       const result = await userController.show(1);
 
-      expect(result).toEqual(UserEntityList[0]);
+      expect(result).toEqual(userEntityList[0]);
     });
   });
   describe('Update', () => {
     test('update method', async () => {
       const result = await userController.update(
         updatePutUserDto,
-        UserEntityList[0].id,
+        userEntityList[0].id,
       );
 
-      expect(result).toEqual(UserEntityList[0]);
+      expect(result).toEqual(userEntityList[0]);
     });
     test('updatePartial method', async () => {
       const result = await userController.updatePartial(
         updatePatchUserDto,
-        UserEntityList[0].id,
+        userEntityList[0].id,
       );
 
-      expect(result).toEqual(UserEntityList[0]);
+      expect(result).toEqual(userEntityList[0]);
     });
   });
 
