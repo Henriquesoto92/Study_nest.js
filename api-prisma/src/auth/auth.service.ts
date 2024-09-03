@@ -111,7 +111,6 @@ export class AuthService {
   }
 
   async reset(password: string, token: string) {
-    console.log('🚀 ~ token:', token);
 
     try {
       const data: any = this.jwtService.verify(token, {

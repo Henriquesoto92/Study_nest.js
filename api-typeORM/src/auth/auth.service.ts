@@ -94,8 +94,6 @@ export class AuthService {
       },
     );
 
-    console.log('🚀 ~ token:', token);
-
     await this.mailerService.sendMail({
       subject: 'Recuperação de Senha',
       to: 'henriquesoto92@gmail.com',
