@@ -12,7 +12,9 @@ import { UserEntity } from './user/entity/user.entity';
 import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: process.env.ENV === 'test' ? '.env.test' : '.env',
+    }),
     ThrottlerModule.forRoot([{ ttl: 1000, limit: 100 }]),
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
